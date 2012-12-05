@@ -25,8 +25,10 @@ define(function(require, exports, module) {
 		},
 
 		render: function() {
-			this.$el.addClass("editing");
-			this.input.focus();
+			$(this.el).addClass("editing");
+			$(this.input).focus();
+
+			return this;
 		},
 
 		toggleDone: function() {
@@ -100,6 +102,8 @@ define(function(require, exports, module) {
 			}
 
 			this.allCheckbox.checked = !remaining;
+
+			return this;
 		},
 
 		addOne: function(todo) {
