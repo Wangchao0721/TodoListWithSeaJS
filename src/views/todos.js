@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 
 		tagName: "li",
 
-		temolate: _.template($('#item-template').html()),
+		template: _.template($('#item-template').html()),
 
 		events: {
 			"click .toggle": "toggleDone",
@@ -24,10 +24,10 @@ define(function(require, exports, module) {
 			this.model.bind('destroy', this.remove, this);
 		},
 
-		render: function() {
+		render: function(e) {
+			$(this.el).html(this.template(this.model.toJSON()))
 			$(this.el).addClass("editing");
-			$(this.input).focus();
-
+			this.input = this.$('.edit');
 			return this;
 		},
 
@@ -110,7 +110,9 @@ define(function(require, exports, module) {
 			var view = new TodoView({
 				model: todo
 			});
+			console.log("addOne")
 			$("#todo-list").append(view.render().el);
+			console.log("addedOne")
 		},
 
 		addAll: function() {
@@ -122,7 +124,8 @@ define(function(require, exports, module) {
 			if(!this.input.val()) return;
 
 			Todos.create({
-				title: this.input.val()
+				title: this.input.val(),
+				done: false
 			});
 			this.input.val('');
 		},
